@@ -1,0 +1,43 @@
+<h2>我的訂購單</h2>
+<script type="text/javascript">
+  function check_total(goods_sn,amount,price){
+    var total=amount*price;
+    $("#total_" + goods_sn).html(total + " 元");
+    $("#goods_total_" + goods_sn).val(total);
+
+    var sum = 0;
+    $('.price').each(function() {
+        sum += Number($(this).val());
+    });
+    $("#bill_total_display").html(sum + " 元");
+    $("#bill_total").val(sum);
+  }
+</script>
+<form action="bill.php" method="post" class="form-horizontal">
+  {foreach from=$cart_arr key=goods_sn item=goods}
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="goods_amount">{$goods.goods_title}</label>
+      <div class="col-md-1">
+        <input type="text" class="form-control" name="goods_amount[{$goods_sn}]" id="goods_amount_{$goods_sn}" placeholder="商品數量" value="{$goods.goods_amount}" onchange="check_total('{$goods_sn}', this.value ,'{$goods.goods_price}')">
+      </div>
+      <div class="col-md-2 text-right">
+        <p class="form-control-static">x {$goods.goods_price} 元 = </p>
+      </div>
+      <div class="col-md-2 text-right">
+        <p class="form-control-static" id="total_{$goods_sn}">{$goods.goods_total} 元</p>
+        <input type="hidden" name="goods_total[{$goods_sn}]" class="price" id="goods_total_{$goods_sn}" value="{$goods.goods_total}">
+      </div>
+    </div>
+  {/foreach}
+  <hr>
+  <div class="form-group">
+    <div class="col-md-offset-7 col-md-2 text-right">
+      <p class="form-control-static" id="bill_total_display">{$bill_total} 元</p>
+      <input type="hidden" class="form-control" name="bill_total" id="bill_total" placeholder="總計" value="{$bill_total}">
+    </div>
+  </div>
+  <div class="text-center">
+    <input type="hidden" name="op" value="save_bill">
+    <button type="submit" class="btn btn-primary">送出訂購單</button>
+  </div>
+</form>

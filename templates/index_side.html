@@ -1,0 +1,13 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">功能表</div>
+  <div class="panel-body">
+    {if $isUser}
+      {include file='side_tools.html'}
+    {else}
+      {include file='side_login.html'}
+    {/if}
+   </div>
+</div>
+{if isset($cart) and $cart!='' and $op!='check_out'}
+    {include file='side_cart.html'}
+{/if}

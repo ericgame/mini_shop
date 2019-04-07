@@ -1,0 +1,21 @@
+<div class="row">
+  {foreach from=$all_goods item=goods}
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="index.php?goods_sn={$goods.goods_sn}"><img src="{$goods.pic}" alt="{$goods.goods_title}"></a>
+        <div class="caption">
+          <div style="height: 60px;">
+            <h3><a href="index.php?goods_sn={$goods.goods_sn}">{$goods.goods_title}</a></h3>
+          </div>
+          <div class="row">
+            <div class="col-md-6">售價：{$goods.goods_price}</div>
+            <div class="col-md-6">人氣：{$goods.goods_counter}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {/foreach}
+</div>
+
+共有 {$total} 件商品
+{$bar}

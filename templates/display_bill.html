@@ -1,0 +1,51 @@
+<h2>{$bill.bill_date} 訂購細目-{$bill.bill_status}</h2>
+<div>收貨人：{$bill.user_name}{$bill.user_sex}</div>
+<div>收貨地址：{$bill.user_zip}{$bill.user_county}{$bill.user_district}{$bill.user_address}</div>
+<div>收貨電話：{$bill.user_tel}</div>
+<table class="table">
+    <tr>
+      <th>商品名稱</th>
+      <th>單價</th>
+      <th>數量</th>
+      <th style="text-align: right;">小計</th>
+    </tr>
+  {foreach from=$bill_detail item=bill}
+    <tr>
+      <td>{$bill.goods_title}</td>
+      <td>{$bill.goods_price}</td>
+      <td>{$bill.goods_amount}</td>
+      <td style="text-align: right;">{$bill.goods_total} 元</td>
+    </tr>
+  {/foreach}
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="text-align: right;">{$bill.bill_total} 元</td>
+    </tr>
+</table>
+{if $isAdmin and $bill.bill_status==""}
+  <script src="class/bootstrap-sweetalert/sweet-alert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="class/bootstrap-sweetalert/sweet-alert.css">
+  <script type="text/javascript">
+    function delete_bill(bill_sn){
+      swal({
+        title: "確定要刪除此訂單嗎？",
+        text: "刪掉之後，該訂單所有資料會消失喔!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "是！我要刪了它！",
+        closeOnConfirm: false
+        },
+        function(){
+        location.href='bill.php?op=delete_bill&bill_sn=' + bill_sn;
+        swal("好啦！刪完了！", "後悔也來不及了。", "success");
+      });
+    }
+  </script>
+  <a href="javascript:delete_bill('{$bill.bill_sn}')" class="btn btn-danger">刪除訂單</a>
+  <a href="bill.php?op=finish_bill&bill_sn={$bill.bill_sn}" class="btn btn-primary">已出貨</a>
+  <a href="pdf.php?op=bill_pdf&bill_sn={$bill.bill_sn}" class="btn btn-info">列印出貨單</a>
+  <a href="excel.php?bill_sn={$bill.bill_sn}" class="btn btn-success">出貨單Excel</a>
+{/if}

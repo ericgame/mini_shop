@@ -1,0 +1,50 @@
+<h1>編輯商品</h1>
+<script src="class/ckeditor/ckeditor.js"></script>
+<form action="tool.php" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+    <div class="form-group">
+        <label class="col-md-2 control-label">商品名稱：</label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="goods_title" id="goods_title" placeholder="請輸入商品名稱" value="{$goods.goods_title}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">商品內容：</label>
+        <div class="col-md-10">
+            <textarea class="form-control" name="goods_content" id="goods_content" placeholder="請輸入商品內容">{$goods.goods_content}</textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">商品價格：</label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="goods_price" id="goods_price" placeholder="請輸入商品價格" value="{$goods.goods_price}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-md-2 control-label">商品圖片：</label>
+        <div class="col-md-10">
+            <input type="file" name="goods_pic" id="goods_pic">
+            {if isset($goods.pic)}
+                <img src="{$goods.pic}" alt="{$goods.goods_title}">
+            {/if}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            {if isset($goods.goods_sn) and $goods.goods_sn > 0}
+                <input type="hidden" name="op" value="update_goods">
+                <input type="hidden" name="goods_sn" value="{$goods.goods_sn}">
+            {else}
+                <input type="hidden" name="op" value="insert_goods">
+            {/if}
+            <button type="submit" class="btn btn-primary">儲存商品</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    CKEDITOR.replace( 'goods_content' );
+</script>
